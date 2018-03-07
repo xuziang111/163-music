@@ -44,10 +44,12 @@ body{
     height:100%;
     padding:20px;
 }
+#songList-container{
+    flex-grow: 1;
+}
 .songList{
     text-align:left;
     border:1px solid #999;
-    flex-grow: 1;
 }
 .songList > li{
     border-bottom:1px solid #ddd;
