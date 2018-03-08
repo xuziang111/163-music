@@ -14,6 +14,10 @@
             this.view=view;
             this.model=model;
             this.view.render(this.model.data)
+            window.eventHub.on('upload',(data)=>{
+                console.log('new song得到了data')
+                console.log(data)
+            })
         }
     }
     controller.init(view,model)

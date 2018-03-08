@@ -56,11 +56,10 @@
     
                     var domain = up.getOption('domain');
                     var response = JSON.parse(info.response);
-                    var sourceLink = {
-                        link:"http://" + domain + '/' + encodeURIComponent(response.key),
-                        key:response.key
-                }
-                    console.log(sourceLink)
+                    var link = "http://" + domain + '/' + encodeURIComponent(response.key)
+                    var key = response.key
+                
+                    window.eventHub.emit('upload',{link,key})
                 },
             'Error': function(up, err, errTip) {
                    //上传出错时,处理相关的事情
