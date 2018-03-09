@@ -59,15 +59,20 @@
                         break
                     }
                 }
-                window.eventHub.emit('select',JSON.parse(JSON.stringify(selectSongData)))//深拷贝。列表中歌曲被点击，右侧显示歌曲信息
+                window.eventHub.emit('selectSong',JSON.parse(JSON.stringify(selectSongData)))//深拷贝。列表中歌曲被点击，右侧显示歌曲信息
             })
         },
         bingEventHub(){
             window.eventHub.on('creat',(songData)=>{//订阅creat事件，将歌曲推入左侧列表
-                this.model.data.push(songData)
-                this.view.render(this.model.data)
-
+                this.model.data.songs.push(songData)
+                this.view.render(this.model.data.songs)
+                $(this.view.el + ">ul>li").last().addClass('active')
+                console.log($(this.view.el + ">ul>li"))
             })
+            window.eventHub.on('clickNewSong',()=>{//订阅clickNewSong事件，将歌曲推入左侧列表           
+                $(this.view.el).find('.active').removeClass('active')
+            })
+
         }
     }
     controller.init(view,model)

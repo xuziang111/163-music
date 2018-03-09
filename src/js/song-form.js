@@ -2,7 +2,6 @@
     let view={
         el:'.page > main',
         template:`
-        <h1>新建歌曲</h1>
 		<form class="form">
 			<div class="row">
 				<label>
@@ -40,6 +39,11 @@
 				html = html.replace(eval('/__'+ string +'__/g'),data[string] || '')
 			})
 			$(this.el).html(html)
+			if(data.id){
+				$(this.el).prepend('<h1>编辑歌曲</h1>')
+			}else{
+				$(this.el).prepend('<h1>新建歌曲</h1>')
+			}
         }
     }
     let model = {
@@ -75,32 +79,61 @@
                 console.log('song-form得到了data')
 				this.reset(data)
 			})
-			window.eventHub.on('select',(data)=>{//被点击的songData传入
-				this.view.render(data)           //将歌曲信息填充到表单
+			window.eventHub.on('selectSong',(data)=>{//被点击的songData传入
+				this.view.render(data)
+				this.model.data = data           //将歌曲信息填充到表单
 				console.log(data)
+			})
+			window.eventHub.on('clickNewSong',()=>{//新建歌曲被点击时清空表单
+				this.model.data = {name:'',singer:'',url:'',id:'',}
+				this.reset(this.model.data)
 			})
 		},
 		reset(data){
 			this.view.render(data)
 		},
+		create(){
+			let needs = 'name singer url'.split(' ')
+			let data = {}
+			needs.map((string)=>{
+				data[string]=$(this.view.el).find(`[name='${string}']`).val()
+			})
+			this.model.creat(data).then(()=>{
+				console.log(this.model.data)
+				this.view.render(this.model.data)
+				let string = JSON.stringify(this.model.data)//深拷贝
+				let object = JSON.parse(string)
+				window.eventHub.emit('creat',object)
+			})
+			console.log('------------------------------lllllllllllllll')
+			console.log(data)
+		},
+		upData(){
+			let needs = 'name singer url'.split(' ')
+			let data = {}
+			needs.map((string)=>{
+				data[string]=$(this.view.el).find(`[name='${string}']`).val()
+			})
+			  // 第一个参数是 className，第二个参数是 objectId
+  			var songs = AV.Object.createWithoutData('Songs', this.model.data.id);
+  			// 修改属性
+			  songs.set('name', data.name);
+			  songs.set('singer', data.singer);
+			  songs.set('url', data.url);
+  			// 保存到云端
+  			songs.save();
+		},
 		bindEvents(){ //给表单绑定一个事件获取一个id
 			console.log($(this.view.el))
 			$(this.view.el).on('submit','form',(e)=>{
 				e.preventDefault();
-				let needs = 'name singer url'.split(' ')
-				let data = {}
-				needs.map((string)=>{
-					data[string]=$(this.view.el).find(`[name='${string}']`).val()
-				})
-				this.model.creat(data).then(()=>{
-					console.log(this.model.data)
-					this.view.render(this.model.data)
-					let string = JSON.stringify(this.model.data)
-					let object = JSON.parse(string)
-					window.eventHub.emit('creat',object)
-				})
-				console.log('------------------------------lllllllllllllll')
-				console.log(data)
+				if(this.model.data.id){
+					console.log('id存在')
+					this.upData()
+				}else{
+					console.log('id不存在')
+					this.create()
+				}
 			})
 		},
     }
