@@ -10,14 +10,10 @@
             let $li = $(li)
             $li.addClass('active').siblings().removeClass('active')
         },
-        render(data){
+        render(data){ //根据data描绘左侧列表
             let songs = data
             $(this.el).html(this.template)
-            console.log('songs')
-            console.log(songs)
-            let liList = songs.map((song)=>$("<li></li>").text(song.name))
-            console.log('liList')
-            console.log(liList)
+            let liList = songs.map((song)=>$("<li></li>").text(song.name).attr('data-id',song.id))
             $(this.el).find('ul').empty()
             liList.map((domLi)=>{
                 $(this.el).find('ul').append(domLi)
@@ -54,15 +50,23 @@
         bindEvents(){
             $(this.view.el).on('click','li',(e)=>{
                 this.view.activeItem(e.currentTarget)
+                let songID = e.currentTarget.getAttribute('data-id')
+                let songs = this.model.data.songs
+                let selectSongData = {}
+                for(let i=0;i<songs.length;i++){
+                    if(songs[i].id === songID){
+                        selectSongData = songs[i]
+                        break
+                    }
+                }
+                window.eventHub.emit('select',JSON.parse(JSON.stringify(selectSongData)))//深拷贝。列表中歌曲被点击，右侧显示歌曲信息
             })
         },
         bingEventHub(){
-            window.eventHub.on('creat',(songData)=>{//订阅creat事件
-                console.log('song-list得到了data')
+            window.eventHub.on('creat',(songData)=>{//订阅creat事件，将歌曲推入左侧列表
                 this.model.data.push(songData)
-                console.log('data在哪')
                 this.view.render(this.model.data)
-                console.log('data在哪')
+
             })
         }
     }

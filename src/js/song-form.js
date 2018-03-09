@@ -74,7 +74,11 @@
 			window.eventHub.on('upload',(data)=>{ //订阅upload事件
                 console.log('song-form得到了data')
 				this.reset(data)
-            })
+			})
+			window.eventHub.on('select',(data)=>{//被点击的songData传入
+				this.view.render(data)           //将歌曲信息填充到表单
+				console.log(data)
+			})
 		},
 		reset(data){
 			this.view.render(data)

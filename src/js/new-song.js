@@ -17,6 +17,16 @@
             window.eventHub.on('upload',(data)=>{//订阅upload事件
                 console.log('new song得到了data')
             })
+            window.eventHub.on('select',(data)=>{
+                console.log(data.id)
+                this.deactive()
+            })
+        },
+        deactive(){
+            $(this.view.el).removeClass('active')
+        },
+        active(){
+            $(this.view.el).addClass('active')
         }
     }
     controller.init(view,model)
