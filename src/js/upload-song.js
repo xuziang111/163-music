@@ -1,5 +1,4 @@
 {
-    console.log(Qiniu)
     let view = {
         el:'.uploadArea',
         find(selector){
@@ -13,7 +12,7 @@
             this.model=model;
             this.initQiniu();
         },
-        initQiniu(){ 
+        initQiniu(){ //初始化七牛
         var uploader = Qiniu.uploader({
         runtimes: 'html5',      // 上传模式,依次退化
         browse_button: this.view.find('#uploadButton'),         // 上传选择的点选按钮，**必需**
@@ -56,10 +55,10 @@
     
                     var domain = up.getOption('domain');
                     var response = JSON.parse(info.response);
-                    var link = "http://" + domain + '/' + encodeURIComponent(response.key)
+                    var url = "http://" + domain + '/' + encodeURIComponent(response.key)
                     var key = response.key
                 
-                    window.eventHub.emit('upload',{link,key})
+                    window.eventHub.emit('upload',{url,key})//发布upload事件
                 },
             'Error': function(up, err, errTip) {
                    //上传出错时,处理相关的事情

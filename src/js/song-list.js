@@ -3,28 +3,67 @@
         el:'#songList-container',
         template:`
         <ul class="songList">
-			<li>歌曲1</li>
-			<li class="active">歌曲2</li>
-			<li>歌曲3</li>
-			<li>歌曲4</li>
-			<li>歌曲5</li>
-			<li>歌曲6</li>
-			<li>歌曲7</li>
-			<li>歌曲8</li>
-			<li>歌曲9</li>
-			<li>歌曲10</li>
+
 		</ul>
         `,
+        activeItem(li){
+            let $li = $(li)
+            $li.addClass('active').siblings().removeClass('active')
+        },
         render(data){
-            $(this.el).html(this.template);
+            let songs = data
+            $(this.el).html(this.template)
+            console.log('songs')
+            console.log(songs)
+            let liList = songs.map((song)=>$("<li></li>").text(song.name))
+            console.log('liList')
+            console.log(liList)
+            $(this.el).find('ul').empty()
+            liList.map((domLi)=>{
+                $(this.el).find('ul').append(domLi)
+            })
         }
     }
-    let model = {}
+    let model = {
+        find(){
+            var query = new AV.Query('Songs')
+            return query.find().then((songs) => {
+                this.data.songs = songs.map((song)=>{
+                    return {id:song.id,...song.attributes}
+                })
+                return songs
+            })
+        },
+        data:{
+            songs:[]
+        }
+    }
     let controller = {
         init(view,model){
             this.view=view;
             this.model=model;
-            this.view.render(this.model.data)
+            this.bindEvents()
+            this.getSongs()
+            this.bingEventHub()
+        },
+        getSongs(){
+            this.model.find().then(()=>{
+                this.view.render(this.model.data.songs)
+            })
+        },
+        bindEvents(){
+            $(this.view.el).on('click','li',(e)=>{
+                this.view.activeItem(e.currentTarget)
+            })
+        },
+        bingEventHub(){
+            window.eventHub.on('creat',(songData)=>{//订阅creat事件
+                console.log('song-list得到了data')
+                this.model.data.push(songData)
+                console.log('data在哪')
+                this.view.render(this.model.data)
+                console.log('data在哪')
+            })
         }
     }
     controller.init(view,model)

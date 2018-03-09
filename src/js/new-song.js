@@ -14,9 +14,8 @@
             this.view=view;
             this.model=model;
             this.view.render(this.model.data)
-            window.eventHub.on('upload',(data)=>{
+            window.eventHub.on('upload',(data)=>{//订阅upload事件
                 console.log('new song得到了data')
-                console.log(data)
             })
         }
     }
