@@ -72,7 +72,18 @@
             window.eventHub.on('clickNewSong',()=>{//订阅clickNewSong事件，将歌曲推入左侧列表           
                 $(this.view.el).find('.active').removeClass('active')
             })
-
+            window.eventHub.on('update',(song)=>{ //有数据的情况下更新歌曲信息
+                console.log('wozhiixnglalalala')
+                let songs = this.model.data.songs
+                for(let i=0;i<songs.length;i++){
+                    if(songs[i].id === song.id){
+                        songs[i] = song
+                        break
+                    }
+                }
+                console.log(this.model.data)
+                this.view.render(this.model.data.songs)
+            })
         }
     }
     controller.init(view,model)

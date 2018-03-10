@@ -67,7 +67,19 @@
 				  Object.assign(this.data,{id,...attributes})
 				  console.log(this.data)
 	        })
-        }
+		},
+		update(data){
+			var songs = AV.Object.createWithoutData('Songs', this.data.id).bind(this);
+			// 修改属性
+			songs.set('name', data.name);
+			songs.set('singer', data.singer);
+			songs.set('url', data.url);
+			// 保存到云端
+			return songs.save().then((response)=>{
+				Object.assign(this.data,data)
+				return response
+			});
+		}
 	}
     let controller = {
         init(view,model){
@@ -108,20 +120,18 @@
 			console.log('------------------------------lllllllllllllll')
 			console.log(data)
 		},
-		upData(){
+		upDate(){
 			let needs = 'name singer url'.split(' ')
 			let data = {}
 			needs.map((string)=>{
 				data[string]=$(this.view.el).find(`[name='${string}']`).val()
 			})
-			  // 第一个参数是 className，第二个参数是 objectId
-  			var songs = AV.Object.createWithoutData('Songs', this.model.data.id);
-  			// 修改属性
-			  songs.set('name', data.name);
-			  songs.set('singer', data.singer);
-			  songs.set('url', data.url);
-  			// 保存到云端
-  			songs.save();
+			console.log('woshidata')
+			console.log(data)
+			this.model.update(data).then(()=>{
+				console.log('wozhiixnglalalala')
+				window.eventHub.emit('update',JSON.parse(JSON.stringify(this.model.data)))
+			})
 		},
 		bindEvents(){ //给表单绑定一个事件获取一个id
 			console.log($(this.view.el))
@@ -129,10 +139,10 @@
 				e.preventDefault();
 				if(this.model.data.id){
 					console.log('id存在')
-					this.upData()
+					this.upDate() //更新歌曲信息
 				}else{
 					console.log('id不存在')
-					this.create()
+					this.create()  //新建歌曲信息
 				}
 			})
 		},
