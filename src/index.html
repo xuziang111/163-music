@@ -45,6 +45,22 @@
     main{
         border:1px solid black
     }
+    .page-1,.page-2,.page-3{
+        display: none;
+    }
+    .page-1.active,.page-2.active,.page-3.active{
+        display:block;
+    }
+
+    .newSongList{
+        text-align:left;
+        border:1px solid #999;
+    }
+    .newSongList > li{
+        border-bottom:1px solid #ddd;
+        padding:10px;
+    }
+
     </style>
 </head>
 <body>
@@ -66,7 +82,8 @@
 
     <main>
             <section id="page-1" class="page-1 active">
-                1111
+                <section class="playlist"></section>
+                <section class="newsong"></section>
             </section>
             <section id="page-2" class="page-2">
                 2222

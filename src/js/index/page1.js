@@ -1,4 +1,16 @@
 {
+    //远古时期引入模块
+    function requirePage(src){
+        let script = document.createElement('script') 
+        script.src=src
+        script.onload = function(){
+            console.log(src)
+        }
+        document.body.appendChild(script)
+    }
+    requirePage("./js/index/page-1-1.js")
+    requirePage("./js/index/page-1-2.js")
+    
     let view = {
         el:'#page-1',
         show(){
