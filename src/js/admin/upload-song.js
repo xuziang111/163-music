@@ -42,11 +42,9 @@
             },
             'UploadProgress': function(up, file) {
                    // 每个文件上传时,处理相关的事情
-                   document.querySelector("#uploadButton>.state").innerHTML="正在上传";
             },
             'FileUploaded': function(up, file, info) {
                 window.eventHub.emit('afterUpload')
-                document.querySelector("#uploadButton>.state").innerHTML="上传完成";
                    // 每个文件上传成功后,处理相关的事情
                    // 其中 info.response 是文件上传成功后，服务端返回的json，形式如
                    // {
