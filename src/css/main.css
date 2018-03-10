@@ -96,3 +96,6 @@ body{
 .page > main > .form{
 
 }
+.loading.active{
+    visibility: visible;
+}

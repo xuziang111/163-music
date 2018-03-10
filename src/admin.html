@@ -6,6 +6,45 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>管理页面</title>
   <link rel="stylesheet" href="./css/main.css">
+  <style>
+  .loading{
+	  visibility: hidden;
+    height:100vh;
+    width:100%;  
+    position:fixed;    
+	top:0;
+	left:0;
+    justify-content: center;
+     align-items:center; 
+     display:flex;
+	 z-index:1;
+  }
+  .loading::before,.loading::after{
+    content:'';
+    position:absolute;
+    background:black;
+    width:0px;
+    height:0px;
+    border-radius:50%;
+    animation:loadings 1.5s infinite linear;
+  }
+  .loading::after{
+      animation:loadings 1.5s infinite linear 0.7s;
+  }
+  
+  @keyframes loadings{
+    0%{
+      width:0px;
+      height:0px;
+      opacity:1;
+    }
+    100%{
+      width:100px;
+      height:100px;
+      opacity:0;
+    }
+  }
+  </style>
 </head>
 <body>
 <div class="page">
@@ -31,6 +70,9 @@
 		
 	</main>
 </div>
+<div id="site-loading" class="loading">
+
+</div>
 	<script src="../node_modules/qiniu-js/dist/qiniu.min.js"></script>
 	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
 	<script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
@@ -40,6 +82,7 @@
 	<script src="./js/new-song.js"></script>
 	<script src="./js/song-list.js"></script>
 	<script src="./js/upload-song.js"></script>
+	<script src="./js/loading.js"></script>
 	<script>
 		
 

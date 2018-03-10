@@ -6,14 +6,24 @@
 
 		</ul>
         `,
-        activeItem(li){
-            let $li = $(li)
-            $li.addClass('active').siblings().removeClass('active')
-        },
         render(data){ //根据data描绘左侧列表
             let songs = data
+            console.log('xxxxxxxxxxxx')
+            console.log(model.data)
+            console.log(data.songs)
             $(this.el).html(this.template)
-            let liList = songs.map((song)=>$("<li></li>").text(song.name).attr('data-id',song.id))
+            let liList = songs.songs.map((song)=>{
+                console.log('.......xxx')
+                let $li = $("<li></li>").text(song.name).attr('data-id',song.id)
+                console.log('.......xxx')
+                if(song.id === songs.selectID){
+                    $li.addClass('active')
+                }
+                console.log('.......xxx')
+                console.log($li)
+                return $li
+            })
+            console.log(liList)
             $(this.el).find('ul').empty()
             liList.map((domLi)=>{
                 $(this.el).find('ul').append(domLi)
@@ -31,7 +41,8 @@
             })
         },
         data:{
-            songs:[]
+            songs:[],
+            selectID:undefined,
         }
     }
     let controller = {
@@ -44,13 +55,17 @@
         },
         getSongs(){
             this.model.find().then(()=>{
-                this.view.render(this.model.data.songs)
+                this.view.render(this.model.data)
             })
         },
         bindEvents(){
             $(this.view.el).on('click','li',(e)=>{
-                this.view.activeItem(e.currentTarget)
                 let songID = e.currentTarget.getAttribute('data-id')
+                this.model.data.selectID = songID
+                console.log('this.model.data')
+                console.log(this.model.data)
+                this.view.render(this.model.data)
+                
                 let songs = this.model.data.songs
                 let selectSongData = {}
                 for(let i=0;i<songs.length;i++){
@@ -65,7 +80,7 @@
         bingEventHub(){
             window.eventHub.on('creat',(songData)=>{//订阅creat事件，将歌曲推入左侧列表
                 this.model.data.songs.push(songData)
-                this.view.render(this.model.data.songs)
+                this.view.render(this.model.data)
                 $(this.view.el + ">ul>li").last().addClass('active')
                 console.log($(this.view.el + ">ul>li"))
             })
@@ -82,7 +97,7 @@
                     }
                 }
                 console.log(this.model.data)
-                this.view.render(this.model.data.songs)
+                this.view.render(this.model.data)
             })
         }
     }

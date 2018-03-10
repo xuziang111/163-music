@@ -28,13 +28,18 @@
         `,
         render(data={}){ //从文件名获取信息 并填充到表单里
 			let placeholders = ['name','singer','url']
+			console.log(data)
 			if(data.key){
 				let xxx = data.key.split(/ - /,2);
-				console.log(xxx)
-				data['singer'] = xxx[0]
-				data['name'] = xxx[1]
+				if(xxx[1]){
+					data['singer'] = xxx[0]
+					data['name'] = xxx[1]
+				}else{
+					data['name'] = data.key
+				}
 			}			
 			let html = this.template
+			console.log(data)
 			placeholders.map((string)=>{
 				html = html.replace(eval('/__'+ string +'__/g'),data[string] || '')
 			})
