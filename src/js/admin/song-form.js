@@ -1,6 +1,6 @@
 {
     let view={
-        el:'.page > main',
+        el:'main',
         template:`
 		<form class="form">
 			<div class="row">
@@ -93,7 +93,8 @@
 			this.view.render(this.model.data)
 			this.bindEvents()
 			window.eventHub.on('upload',(data)=>{ //订阅upload事件
-                console.log('song-form得到了data')
+				console.log('song-form得到了data')
+				this.model.data={name:'',singer:'',url:'',id:'',}	
 				this.reset(data)
 			})
 			window.eventHub.on('selectSong',(data)=>{//被点击的songData传入
@@ -101,9 +102,9 @@
 				this.model.data = data           //将歌曲信息填充到表单
 				console.log(data)
 			})
-			window.eventHub.on('clickNewSong',()=>{//新建歌曲被点击时清空表单
-				this.model.data = {name:'',singer:'',url:'',id:'',}
-				this.reset(this.model.data)
+			window.eventHub.on('clickNewSong',(data)=>{//新建歌曲被点击时清空表单
+				this.model.data={name:'',singer:'',url:'',id:'',}			
+				this.reset(data)
 			})
 		},
 		reset(data){

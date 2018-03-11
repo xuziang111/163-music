@@ -10,10 +10,28 @@
             let songs = data
             $(this.el).html(this.template)
             let liList = songs.songs.map((song)=>{
-                let $li = $("<li></li>").text(song.name).attr('data-id',song.id)
+                let $li = $(`<li>
+                <span>${song.name}</span>
+                <span>${song.singer}</span>
+                </li>`).attr('data-id',song.id)
                 if(song.id === songs.selectID){
                     $li.addClass('active')
                 }
+                return $li
+            })
+            $(this.el).find('ul').empty()
+            liList.map((domLi)=>{
+                $(this.el).find('ul').append(domLi)
+            })
+        },
+        creatRender(data){
+            let songs = data
+            $(this.el).html(this.template)
+            let liList = songs.songs.map((song)=>{
+                let $li = $(`<li>
+                <span>${song.name}</span>
+                <span>${song.singer}</span>
+                </li>`)
                 return $li
             })
             $(this.el).find('ul').empty()
@@ -69,7 +87,7 @@
         bingEventHub(){
             window.eventHub.on('creat',(songData)=>{//订阅creat事件，将歌曲推入左侧列表
                 this.model.data.songs.push(songData)
-                this.view.render(this.model.data)
+                this.view.creatRender(this.model.data)
                 $(this.view.el + ">ul>li").last().addClass('active')
                 console.log($(this.view.el + ">ul>li"))
             })

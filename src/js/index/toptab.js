@@ -13,10 +13,10 @@
         },
         bindEvents(){
             console.log('xxx')
-            $(this.view.el).on('click','span',(e)=>{
-                $span = $(e.currentTarget)
-                let pageName = $span.attr('data-tab')
-                $span.addClass('active').siblings().removeClass('active')
+            $(this.view.el).on('click','li',(e)=>{
+                $li = $(e.currentTarget)
+                let pageName = $li.attr('data-tab')
+                $li.addClass('active').siblings().removeClass('active')
                 window.eventHub.emit('selectTab',pageName)
             })
         },

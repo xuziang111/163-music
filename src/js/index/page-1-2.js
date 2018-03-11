@@ -1,17 +1,23 @@
 {
     let view = {
-        el:'section.newsong',
+        el:'section>.newsong',
         template:`
+        <h2>最新音乐</h2>
         <ul class='newSongList'>
         </ul>
         `,
-        render(data){ //根据data描绘左侧列表
+        render(data={}){ //根据data描绘左侧列表
             let songs = data
             $(this.el).html(this.template)
             let liList = songs.songs.map((song)=>{
                 let $li = $(`<li>
-                <h3>${song.name}</h3>
-                <p>${song.singer}</p>
+                <div class="newSongList-left">
+                    <h3>${song.name}</h3>
+                    <p>${song.singer}</p>
+                </div>
+                <div class="newSongList-right">
+                    <span></span>
+                <div>
             </li>`)
                 return $li
             })
@@ -30,7 +36,7 @@
                 })
                 return songs
             })
-        },
+        }, 
         data:{
             songs:[],
         }

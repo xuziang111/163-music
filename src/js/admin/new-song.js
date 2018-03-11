@@ -15,7 +15,8 @@
             this.model=model;
             this.view.render(this.model.data)
             window.eventHub.on('upload',(data)=>{//订阅upload事件
-                console.log('new song得到了data')
+                this.active()
+                window.eventHub.emit('clickNewSong',data)
             })
             window.eventHub.on('selectSong',(data)=>{
                 console.log(data.id)
@@ -25,6 +26,9 @@
                 console.log('我被点了')
                 this.active()
                 window.eventHub.emit('clickNewSong')
+            })
+            window.eventHub.on('creat',()=>{
+                this.deactive()
             })
         },
         deactive(){
