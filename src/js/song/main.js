@@ -16,14 +16,15 @@
             let {song,status} = data
             $('.cd-cover').css('background-image',`url(${data.song.cover})`)
             if( $(this.el).find('audio').attr('src') !== song.url){
-                $(this.el).find('audio').attr('src',song.url)
+                let audio = $(this.el).find('audio').attr('src',song.url).get(0)
+                audio.onended = ()=>{window.eventHub.emit('songEnd')}
             }
             $(this.el).find('h1').text(data.song.name)
             this.renderStyle(data)
             if(status === 'playing'){
-                $(this.el).find('.cd-light').removeClass('playing')
-            }else{
                 $(this.el).find('.cd-light').addClass('playing')
+            }else{
+                $(this.el).find('.cd-light').removeClass('playing')
             }
         },
         renderStyle(data){
@@ -48,7 +49,7 @@
                 url:'',
                 cover:'',
             },
-            status:'paused',
+            status:'playing',
         },
         get(id){
             var query = new AV.Query('Songs');
@@ -78,12 +79,16 @@
         bindEvents(){
             $(this.view.el).on('click',".play-button",()=>{
                 if(this.model.data.status==='paused'){
-                    this.view.pause()
+                    this.view.play()
                     this.model.data.status = 'playing'
                 }else{
-                    this.view.play()
+                    this.view.pause()
                     this.model.data.status = 'paused'
                 }
+                this.view.render(this.model.data)
+            })
+            window.eventHub.on('songEnd',()=>{
+                this.model.data.status = 'playing'
                 this.view.render(this.model.data)
             })
         },
