@@ -37,11 +37,11 @@ body{
     margin-top:50px;
     margin-bottom:10px;
     background:rgba(255,255,255,0.1);
+    border:1px dashed rgba(0,0,0,0.3);
+	border-radius: 10px;
 }
 .draggable{
     height:200px;
-	border:1px dashed black;
-	border-radius: 4px;
     cursor: pointer;
 }
 .clickable{
@@ -76,6 +76,10 @@ body{
 /*main*/
 main{
     text-align: center;
+    display:flex;
+    margin:0 auto;
+    justify-content:space-between;
+    max-width:80%;
 }
 main>h1{
     font-weight:inherit;
@@ -85,8 +89,6 @@ main>h1{
 }
 .form{
     font-size:16px;
-    margin:0 auto;
-    max-width:80%;
     display:flex;
     align-items: center;
     justify-content: center;
@@ -168,4 +170,26 @@ input{
     height:100px;
     opacity:0;
   }
+}
+main>form>.row>button{
+    background:rgba(255,255,255,0.1);
+    color:#D4D4D4;
+}
+.uploadImageArea{
+    width:40%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border:1px dashed rgba(0,0,0,0.3);
+    border-radius: 10px;
+    cursor: pointer;
+}
+.draggableImage,.clickableImage{
+    width:100%;
+    padding:auto;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height:257px;
+    flex-direction: column;
 }

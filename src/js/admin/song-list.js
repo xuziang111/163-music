@@ -96,6 +96,7 @@
             })
             window.eventHub.on('update',(song)=>{ //有数据的情况下更新歌曲信息
                 console.log('wozhiixnglalalala')
+                this.model.data.selectID = songID
                 let songs = this.model.data.songs
                 for(let i=0;i<songs.length;i++){
                     if(songs[i].id === song.id){

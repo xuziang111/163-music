@@ -1,8 +1,7 @@
 {
     let view={
-        el:'main',
+        el:'main>form',
         template:`
-		<form class="form">
 			<div class="row">
 				<label>
 					歌名
@@ -19,15 +18,26 @@
 				<label>
 					外链
 				</label>
-				<input name="url" type="text" value="__url__">				
+				<input name="url" type="text" value="__url__">
+			</div>
+			<div class="row cover">
+				<label>
+					封面
+				</label>
+				<input name="cover" type="text" value="__cover__">				
 			</div>
 			<div class="row">
 				<button type="submit">保存</button>
 			</div>
-		</form>
-        `,
+		`,
+		templateImage:`
+				<label>
+					封面
+				</label>
+				<input name="cover" type="text" value="__cover__">				
+		`,
         render(data={}){ //从文件名获取信息 并填充到表单里
-			let placeholders = ['name','singer','url']
+			let placeholders = ['name','singer','url','cover']
 			console.log(data)
 			if(data.key){
 				let xxx = data.key.split(/ - /,2);
@@ -49,14 +59,20 @@
 			}else{
 				$(this.el).prepend('<h1>新建歌曲</h1>')
 			}
-        }
+		},
+		renderImage(data){
+			let html = this.templateImage
+			html = html.replace('__cover__',data.cover || '')
+			$(`${this.el}>.cover`).html(html)
+		},
     }
     let model = {
 		data:{
             name:'',
             singer:'',
             url:'',
-            id:'',
+			id:'',
+			cover:'',
         },
         creat(data){
             var Songs = AV.Object.extend('Songs');
@@ -64,7 +80,8 @@
             return songs.save({//返回一个promise对象 于bindEvents中
 				name:data.name,
 				singer:data.singer,
-            	url:data.url,
+				url:data.url,
+				cover:data.cover,
 			})
             .then((newSongs)=>{
 				console.log('xxxx')
@@ -76,9 +93,12 @@
 		update(data){
 			var songs = AV.Object.createWithoutData('Songs', this.data.id).bind(this);
 			// 修改属性
+			console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+			console.log(data)
 			songs.set('name', data.name);
 			songs.set('singer', data.singer);
 			songs.set('url', data.url);
+			songs.set('cover', data.cover);
 			// 保存到云端
 			return songs.save().then((response)=>{
 				Object.assign(this.data,data)
@@ -94,8 +114,13 @@
 			this.bindEvents()
 			window.eventHub.on('upload',(data)=>{ //订阅upload事件
 				console.log('song-form得到了data')
-				this.model.data={name:'',singer:'',url:'',id:'',}	
+				data.cover = this.model.data.cover
+				this.model.data={name:'',singer:'',url:'',id:'',cover:'',}	
 				this.reset(data)
+			})
+			window.eventHub.on('uploadImage',(data)=>{ //订阅upload事件
+				Object.assign(this.model.data,data)
+				this.view.renderImage(this.model.data)
 			})
 			window.eventHub.on('selectSong',(data)=>{//被点击的songData传入
 				this.view.render(data)
@@ -103,7 +128,7 @@
 				console.log(data)
 			})
 			window.eventHub.on('clickNewSong',(data)=>{//新建歌曲被点击时清空表单
-				this.model.data={name:'',singer:'',url:'',id:'',}			
+				this.model.data={name:'',singer:'',url:'',id:'',cover:''}			
 				this.reset(data)
 			})
 		},
@@ -111,11 +136,16 @@
 			this.view.render(data)
 		},
 		create(){
-			let needs = 'name singer url'.split(' ')
+			let needs = 'name singer url cover'.split(' ')
 			let data = {}
-			needs.map((string)=>{
-				data[string]=$(this.view.el).find(`[name='${string}']`).val()
-			})
+			for(let i=0;i<needs.length;i++){
+				if(!$(this.view.el).find(`[name='${needs[i]}']`).val()){
+					alert(`请输入${needs[i]}`)
+					return
+				}else{
+					data[needs[i]]=$(this.view.el).find(`[name='${needs[i]}']`).val()
+				}
+			}
 			this.model.creat(data).then(()=>{
 				console.log(this.model.data)
 				this.view.render(this.model.data)
@@ -123,11 +153,12 @@
 				let object = JSON.parse(string)
 				window.eventHub.emit('creat',object)
 			})
+			alert('保存成功')
 			console.log('------------------------------lllllllllllllll')
 			console.log(data)
 		},
 		upDate(){
-			let needs = 'name singer url'.split(' ')
+			let needs = 'name singer url cover'.split(' ')
 			let data = {}
 			needs.map((string)=>{
 				data[string]=$(this.view.el).find(`[name='${string}']`).val()
@@ -138,10 +169,11 @@
 				console.log('wozhiixnglalalala')
 				window.eventHub.emit('update',JSON.parse(JSON.stringify(this.model.data)))
 			})
+			alert('更新成功')
 		},
 		bindEvents(){ //给表单绑定一个事件获取一个id
 			console.log($(this.view.el))
-			$(this.view.el).on('submit','form',(e)=>{
+			$(this.view.el).on('submit',(e)=>{
 				e.preventDefault();
 				if(this.model.data.id){
 					console.log('id存在')

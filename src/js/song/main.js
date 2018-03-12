@@ -2,12 +2,13 @@
     let view = {
         el:'#app',
         template:`
+        <h1>{{name}}</h1>
         <audio src={{url}}></audio>
         <button class="play">播放</button>
         <button class="pause">暂停</button>
         `,
         render(data){
-            $(this.el).html(this.template.replace('{{url}}',data.url))
+            $(this.el).html(this.template.replace('{{url}}',data.song.url).replace('{{name}}',data.song.name))
         },
         play(){
             let audio = $(this.el).find('audio')[0]
@@ -20,15 +21,17 @@
     }
     let model = {
         data:{
-            id:'',
-            name:'',
-            singer:'',
-            url:'',
+            song:{
+                id:'',
+                name:'',
+                singer:'',
+                url:'',
+            },
         },
         get(id){
             var query = new AV.Query('Songs');
             return query.get(id).then((song) => {
-                Object.assign(this.data,{id:id,...song.attributes})
+                Object.assign(this.data.song,{id:id,...song.attributes})
                 console.log(song)
                 return song 
             }, function (error) {
@@ -45,7 +48,7 @@
                 console.log(song)
                 this.view.render(this.model.data)
                 setTimeout(() => {
-                   this.view.play() 
+                  
                 }, 3000);
             })
             this.bindEvents()
