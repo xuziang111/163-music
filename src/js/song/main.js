@@ -1,14 +1,34 @@
 {
     let view = {
         el:'#app',
+        el2:'head',
         template:`
-        <h1>{{name}}</h1>
-        <audio src={{url}}></audio>
-        <button class="play">播放</button>
-        <button class="pause">暂停</button>
+        `,
+        template2:`
+        <style>
+        body::after{
+            background:url("{{cover}}") center center no-repeat; 
+            background-size:cover;
+        }
+        </style>
         `,
         render(data){
-            $(this.el).html(this.template.replace('{{url}}',data.song.url).replace('{{name}}',data.song.name))
+            let {song,status} = data
+            $('.cd-cover').css('background-image',`url(${data.song.cover})`)
+            if( $(this.el).find('audio').attr('src') !== song.url){
+                $(this.el).find('audio').attr('src',song.url)
+            }
+            $(this.el).find('h1').text(data.song.name)
+            this.renderStyle(data)
+            if(status === 'playing'){
+                $(this.el).find('.cd-light').removeClass('playing')
+            }else{
+                $(this.el).find('.cd-light').addClass('playing')
+            }
+        },
+        renderStyle(data){
+            let style = this.template2.replace('{{cover}}',data.song.cover)
+            $(this.el2).append(style)
         },
         play(){
             let audio = $(this.el).find('audio')[0]
@@ -26,7 +46,9 @@
                 name:'',
                 singer:'',
                 url:'',
+                cover:'',
             },
+            status:'paused',
         },
         get(id){
             var query = new AV.Query('Songs');
@@ -47,18 +69,22 @@
             this.model.get(id).then((song)=>{
                 console.log(song)
                 this.view.render(this.model.data)
-                setTimeout(() => {
-                  
-                }, 3000);
+                console.log('bofangs')
+                console.log('bofangs')
+                this.view.play()
             })
             this.bindEvents()
         },
         bindEvents(){
-            $(this.view.el).on('click','.play',()=>{
-                this.view.play()
-            })
-            $(this.view.el).on('click','.pause',()=>{
-                this.view.pause()
+            $(this.view.el).on('click',".play-button",()=>{
+                if(this.model.data.status==='paused'){
+                    this.view.pause()
+                    this.model.data.status = 'playing'
+                }else{
+                    this.view.play()
+                    this.model.data.status = 'paused'
+                }
+                this.view.render(this.model.data)
             })
         },
         getSongId(){
