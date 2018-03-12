@@ -2,28 +2,27 @@
     let view = {
         el:'section>.newsong',
         template:`
-        <h2>最新音乐</h2>
-        <ul class='newSongList'>
-        </ul>
-        `,
-        render(data={}){ //根据data描绘左侧列表
-            let songs = data
-            $(this.el).html(this.template)
-            let liList = songs.songs.map((song)=>{
-                let $li = $(`<li>
+        <li>
+            <a href="./song.html?id={{song.id}}">
                 <div class="newSongList-left">
-                    <h3>${song.name}</h3>
-                    <p>${song.singer}</p>
+                    <h3>{{song.name}}</h3>
+                    <p>{{song.singer}}</p>
                 </div>
                 <div class="newSongList-right">
                     <span></span>
                 <div>
-            </li>`)
-                return $li
-            })
-            $(this.el).find('ul').empty()
-            liList.map((domLi)=>{
-                $(this.el).find('ul').append(domLi)
+                </a>
+            </li>
+        `,
+        render(data={}){ //根据data描绘左侧列表
+            let {songs} = data
+            songs.map((song)=>{
+                let $li = $(this.template
+                    .replace('{{song.name}}',song.name)
+                    .replace('{{song.singer}}',song.singer)
+                    .replace('{{song.id}}',song.id)
+                )
+                $(this.el).find('ul').append($li)
             })
         }
     }
