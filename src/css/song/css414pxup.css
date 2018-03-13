@@ -1,0 +1,27 @@
+
+body{
+    padding-top:80px;
+}
+.dist-content{
+    width:342px;
+}
+.point{
+    width:110px;
+    height:157px;
+}
+.cd-border{
+    width:342px;
+    height:342px;
+}
+.cd-light{
+    width:342px;
+    height:342px;
+}
+.cd-cover{
+    width:212px;
+    height:212px;
+}
+.play-button{
+    width:65px;
+    height:65px;
+}
