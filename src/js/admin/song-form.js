@@ -1,7 +1,9 @@
 {
     let view={
         el:'main>form',
-        template:`
+		template:`
+		<textarea name="lrc">__lrc__</textarea>
+		<div>
 			<div class="row">
 				<label>
 					歌名
@@ -29,6 +31,7 @@
 			<div class="row">
 				<button type="submit">保存</button>
 			</div>
+			<div>
 		`,
 		templateImage:`
 				<label>
@@ -37,7 +40,7 @@
 				<input name="cover" type="text" value="__cover__">				
 		`,
         render(data={}){ //从文件名获取信息 并填充到表单里
-			let placeholders = ['name','singer','url','cover']
+			let placeholders = ['name','singer','url','cover','lrc']
 			console.log(data)
 			if(data.key){
 				let xxx = data.key.split(/ - /,2);
@@ -51,13 +54,16 @@
 			let html = this.template
 			console.log(data)
 			placeholders.map((string)=>{
+				if(string === 'lrc'&&(!data['lrc'] || data['lrc'] === '')){
+					data['lrc'] = '请在此输入lrc歌词'
+				}
 				html = html.replace(eval('/__'+ string +'__/g'),data[string] || '')
 			})
 			$(this.el).html(html)
 			if(data.id){
-				$(this.el).prepend('<h1>编辑歌曲</h1>')
+				$('main>form>div').prepend('<h1>编辑歌曲</h1>')
 			}else{
-				$(this.el).prepend('<h1>新建歌曲</h1>')
+				$('main>form>div').prepend('<h1>新建歌曲</h1>')
 			}
 		},
 		renderImage(data){
@@ -73,6 +79,7 @@
             url:'',
 			id:'',
 			cover:'',
+			lrc:'',
         },
         creat(data){
             var Songs = AV.Object.extend('Songs');
@@ -82,6 +89,7 @@
 				singer:data.singer,
 				url:data.url,
 				cover:data.cover,
+				lrc:data.lrc,
 			})
             .then((newSongs)=>{
 				console.log('xxxx')
@@ -99,6 +107,7 @@
 			songs.set('singer', data.singer);
 			songs.set('url', data.url);
 			songs.set('cover', data.cover);
+			songs.set('lrc', data.lrc);
 			// 保存到云端
 			return songs.save().then((response)=>{
 				Object.assign(this.data,data)
@@ -115,7 +124,7 @@
 			window.eventHub.on('upload',(data)=>{ //订阅upload事件
 				console.log('song-form得到了data')
 				data.cover = this.model.data.cover
-				this.model.data={name:'',singer:'',url:'',id:'',cover:'',}	
+				this.model.data={name:'',singer:'',url:'',id:'',cover:'',lrc:'',}	
 				this.reset(data)
 			})
 			window.eventHub.on('uploadImage',(data)=>{ //订阅upload事件
@@ -128,7 +137,7 @@
 				console.log(data)
 			})
 			window.eventHub.on('clickNewSong',(data)=>{//新建歌曲被点击时清空表单
-				this.model.data={name:'',singer:'',url:'',id:'',cover:''}			
+				this.model.data={name:'',singer:'',url:'',id:'',cover:'',lrc:'请在此输入lrc歌词'}			
 				this.reset(data)
 			})
 		},
@@ -136,7 +145,7 @@
 			this.view.render(data)
 		},
 		create(){
-			let needs = 'name singer url cover'.split(' ')
+			let needs = 'name singer url cover lrc'.split(' ')
 			let data = {}
 			for(let i=0;i<needs.length;i++){
 				if(!$(this.view.el).find(`[name='${needs[i]}']`).val()){
@@ -158,7 +167,7 @@
 			console.log(data)
 		},
 		upDate(){
-			let needs = 'name singer url cover'.split(' ')
+			let needs = 'name singer url cover lrc'.split(' ')
 			let data = {}
 			needs.map((string)=>{
 				data[string]=$(this.view.el).find(`[name='${string}']`).val()

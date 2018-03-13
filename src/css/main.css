@@ -9,6 +9,7 @@ body{
     line-height:1.5;
     background:url('../img/index/bodybackground.jpg') fixed center center no-repeat;
     background-size: cover;
+    text-align: center;
 }
 .page{
 
@@ -91,10 +92,17 @@ main>h1{
     font-size:16px;
     display:flex;
     align-items: center;
+    justify-content: space-around;
+    flex-grow: 2;
+}
+.form>div{
+    font-size:16px;
+    display:flex;
+    align-items: center;
     justify-content: center;
     flex-direction: column;
 }
-.form > .row{
+.form >div>.row{
     display:flex;
     margin-top:10px;
 }
@@ -119,7 +127,7 @@ input{
     border:1px solid #999;
     margin-left:4em;
 }
-.form > .row > label{
+.form >div>.row > label{
     width:4em;
     display:flex;
     justify-content: center;
@@ -171,18 +179,19 @@ input{
     opacity:0;
   }
 }
-main>form>.row>button{
+main>form>div>.row>button{
     background:rgba(255,255,255,0.1);
     color:#D4D4D4;
 }
 .uploadImageArea{
-    width:40%;
+    flex-grow: 1;
     display:flex;
     align-items: center;
     justify-content: center;
     border:1px dashed rgba(0,0,0,0.3);
     border-radius: 10px;
     cursor: pointer;
+    background:rgba(255,255,255,0.1);
 }
 .draggableImage,.clickableImage{
     width:100%;
@@ -192,4 +201,13 @@ main>form>.row>button{
     align-items: center;
     height:257px;
     flex-direction: column;
+}
+textarea{
+    resize: none;
+    width:40%;
+    height:257px;
+    background:rgba(255,255,255,0.1);
+    border:1px dashed rgba(0,0,0,0.3);
+    border-radius: 10px;
+    color:#D4D4D4;
 }

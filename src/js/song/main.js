@@ -33,10 +33,12 @@
         },
         play(){
             let audio = $(this.el).find('audio')[0]
+            $(this.el).find(".play-button").removeClass('active')
             audio.play()
         },
         pause(){
             let audio = $(this.el).find('audio')[0]
+            $(this.el).find(".play-button").addClass('active')
             audio.pause()
         }
     }
@@ -77,7 +79,7 @@
             this.bindEvents()
         },
         bindEvents(){
-            $(this.view.el).on('click',".play-button",()=>{
+            $(this.view.el).on('click',()=>{
                 if(this.model.data.status==='paused'){
                     this.view.play()
                     this.model.data.status = 'playing'
@@ -88,7 +90,8 @@
                 this.view.render(this.model.data)
             })
             window.eventHub.on('songEnd',()=>{
-                this.model.data.status = 'playing'
+                console.log('haha')
+                this.model.data.status = 'paused'
                 this.view.render(this.model.data)
             })
         },
