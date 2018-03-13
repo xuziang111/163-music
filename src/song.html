@@ -45,6 +45,7 @@
             align-items: center;
             width:342px;
             margin:0 auto;
+            overflow: hidden;
         }
         .point{
             position:absolute;
@@ -84,6 +85,10 @@
             top:50%;
             left:50%;
             transform: translate(-50%,-50%);
+            display:none;
+        }
+        .play-button.active{
+            display:inherit;
         }
         .logo{
             background:url("./img/index/logo.png");
@@ -128,7 +133,7 @@
                         </div>
                     </div>
                 </div>
-                <span class="play-button">
+                <span class="play-button active">
                     <img src="./img/index/playbutton_L.png" height="65" width="65">
                 </span>
             </div>
