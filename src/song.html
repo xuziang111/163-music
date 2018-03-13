@@ -2,7 +2,7 @@
 <html lang="zh-Hans">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>歌曲播放</title>
     <script>
@@ -21,7 +21,8 @@
             position: relative;
             height:100vh;
             width:100vw;
-            padding-top:80px;
+            padding-top:63px;
+            overflow: hidden;
         }
         body::after{
             content:'';
@@ -43,7 +44,7 @@
             display:flex;
             justify-content: center;
             align-items: center;
-            width:342px;
+            width:248px;
             margin:0 auto;
             overflow: hidden;
         }
@@ -51,29 +52,29 @@
             position:absolute;
             left:45vw;
             top:0;
-            width:96px;
-            height:137px;
+            width:84px;
+            height:122px;
         }
         .cd-border{
-            background:url("./img/index/cd-border.png");
-            background-size: 342px 342px;
-            width:342px;
-            height:342px;
+            background:url("./img/index/cd-border.png") center center no-repeat;
+            background-size: cover;
+            width:248px;
+            height:248px;
             display:flex;
             justify-content: center;
             align-items: center;
         }
         .cd-light{
-            background:url("./img/index/cd-light.png");
-            background-size: 342px 342px;
-            width:342px;
-            height:342px;
+            background:url("./img/index/cd-light.png") center center no-repeat;
+            background-size: cover;
+            width:248px;
+            height:248px;
         }
         .cd-cover{
-            background:url("./img/index/cd-cover.jpg") center no-repeat;
-            background-size: 281px 281px;
-            width:281px;
-            height:281px;
+            background:url("./img/index/cd-cover.jpg") center center no-repeat;
+            background-size: cover;
+            width:150px;
+            height:150px;
             border-radius:50%;
             z-index:-1;
             display:flex;
@@ -120,6 +121,51 @@
         .cd-light.playing{
             animation-play-state:running;
         }
+        .lrc{
+            color: hsla(0,0%,100%,.6);
+            text-align: center;
+            width:1rem;
+            height:88px;
+            overflow: hidden;
+            transition: all .3s;
+        }
+        .lines{
+            transition: all .3s;
+        }
+        .lrc>.lines>p{
+            font-size: 16px;
+            line-height:1.5;
+            padding-bottom: 8px;
+        }
+        p.active{
+            color:#fff;
+        }
+        footer{
+            position:fixed;
+            bottom:0;
+            width:1rem;
+            display:flex;
+            justify-content: space-around;
+            bottom:10px;
+        }
+        footer>span{
+            width:45%;
+            min-width:131px;
+            height:38px;
+            border-radius:40px;
+            line-height:38px;
+            text-align: center;
+        }
+        footer>.open{
+            border:1px solid #d33a31;
+            color:#d33a31;
+            background:rgba(0,0,0,0)
+        }
+        footer>.download{
+            border:1px solid #d33a31;
+            color:#fff;
+            background:#d33a31;
+        }
     </style>
 </head>
 <body>
@@ -127,7 +173,7 @@
             <span class="logo"></span>
             <div class="dist-content">
             <div class="dist-content">
-                <div class="cd-light playing">
+                <div class="cd-light">
                     <div class="cd-border">
                         <div class="cd-cover">
                         </div>
@@ -139,15 +185,22 @@
             </div>
             </div>
             <div class="point">
-                <img src="./img/index/point.png" height="157" width="110">
+                <img src="./img/index/point.png" height="122" width="84">
             </div>
             <h1>{{name}}</h1>
             <audio src="#"></audio>
-            <button class="play">播放</button>
-            <button class="pause">暂停</button>
+        <div class="lrc">
+            <div class="lines">
+
+            </div>
+
+        </div>
 
     </div>
-
+    <footer>
+        <span class="open">打开</span>
+        <span class="download">下载</span>
+    </footer>
 
 
     <script src="../node_modules/qiniu-js/dist/qiniu.min.js"></script>

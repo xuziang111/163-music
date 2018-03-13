@@ -167,16 +167,17 @@
 			console.log(data)
 		},
 		upDate(){
-			let needs = 'name singer url cover lrc'.split(' ')
+			let needs = 'name singer url cover lrc id'.split(' ')
 			let data = {}
 			needs.map((string)=>{
 				data[string]=$(this.view.el).find(`[name='${string}']`).val()
 			})
 			console.log('woshidata')
 			console.log(data)
+			data.id = this.model.data.id
 			this.model.update(data).then(()=>{
 				console.log('wozhiixnglalalala')
-				window.eventHub.emit('update',JSON.parse(JSON.stringify(this.model.data)))
+				window.eventHub.emit('update',JSON.parse(JSON.stringify(data)))
 			})
 			alert('更新成功')
 		},

@@ -18,6 +18,7 @@
             if( $(this.el).find('audio').attr('src') !== song.url){
                 let audio = $(this.el).find('audio').attr('src',song.url).get(0)
                 audio.onended = ()=>{window.eventHub.emit('songEnd')}
+                audio.ontimeupdate = () => {this.showLrc(audio.currentTime)}
             }
             $(this.el).find('h1').text(data.song.name)
             this.renderStyle(data)
@@ -26,20 +27,58 @@
             }else{
                 $(this.el).find('.cd-light').removeClass('playing')
             }
+            let {lrc} = song
+            let regex = /\[([\d:.]+)\](.+)/
+
+            let array = lrc.split('\n').map((string)=>{
+                let p = document.createElement('P')
+                let matches = string.match(regex)
+                p.textContent = matches[2]
+                if(matches){
+                    let time = matches[1]
+                    let parts = time.split(':')
+                    let minutes = parts[0]
+                    let secounds = parts[1]
+                    newTime = parseInt(minutes,10) * 60 +parseFloat(secounds,10)
+                    p.setAttribute('data-time',newTime)
+                    p.textContent = matches[2]
+                }else{
+                    p.textContent = string
+                }
+                $(this.el).find('.lrc>.lines').append(p)
+            })
         },
         renderStyle(data){
             let style = this.template2.replace('{{cover}}',data.song.cover)
             $(this.el2).append(style)
         },
+        showLrc(time){
+            console.log(time)
+            let allP = $(this.el).find('.lrc>.lines>p')
+            for(let i=0;i<allP.length;i++){
+                if(i===allP.length-1){
+                    break
+                }else{
+                    let currentTime = allP.eq(i).attr('data-time')
+                    let nextTime = allP.eq(i+1).attr('data-time')
+                    if (currentTime <= time && nextTime > time){
+                        let height = allP.eq(i).offset().top - $(this.el).find('.lrc>.lines').offset().top
+                        height =height -32
+                        $(this.el).find('.lrc>.lines').css('transform',`translateY(-${height}px)`)
+                        allP.eq(i).addClass('active').siblings().removeClass('active')
+                    }
+                }
+            }
+        },
         play(){
             let audio = $(this.el).find('audio')[0]
-            $(this.el).find(".play-button").removeClass('active')
             audio.play()
+            $(this.el).find(".play-button").removeClass('active')
         },
         pause(){
             let audio = $(this.el).find('audio')[0]
-            $(this.el).find(".play-button").addClass('active')
             audio.pause()
+            $(this.el).find(".play-button").addClass('active')
         }
     }
     let model = {
@@ -57,7 +96,6 @@
             var query = new AV.Query('Songs');
             return query.get(id).then((song) => {
                 Object.assign(this.data.song,{id:id,...song.attributes})
-                console.log(song)
                 return song 
             }, function (error) {
               alert('获取失败')
@@ -70,11 +108,10 @@
             this.model = model;
             let id = this.getSongId()
             this.model.get(id).then((song)=>{
-                console.log(song)
                 this.view.render(this.model.data)
-                console.log('bofangs')
-                console.log('bofangs')
-                this.view.play()
+                setTimeout(() => {
+                    this.view.play()
+                }, 0);
             })
             this.bindEvents()
         },
@@ -90,7 +127,6 @@
                 this.view.render(this.model.data)
             })
             window.eventHub.on('songEnd',()=>{
-                console.log('haha')
                 this.model.data.status = 'paused'
                 this.view.render(this.model.data)
             })

@@ -95,15 +95,25 @@
                 $(this.view.el).find('.active').removeClass('active')
             })
             window.eventHub.on('update',(song)=>{ //有数据的情况下更新歌曲信息
-                console.log('wozhiixnglalalala')
-                this.model.data.selectID = songID
+                console.log(song)
+                this.model.data.selectID = song.id
+                console.log(song.id)
+                console.log(1)
                 let songs = this.model.data.songs
+                console.log(2)
                 for(let i=0;i<songs.length;i++){
+                    console.log(4)
+                    console.log(songs[i])
+                    console.log(songs[i].id)
+                    console.log(song.id)
                     if(songs[i].id === song.id){
-                        songs[i] = song
+                        console.log(3)
+                        Object.assign(songs[i],song)
                         break
                     }
                 }
+                console.log(5)
+                console.log(songs)
                 console.log(this.model.data)
                 this.view.render(this.model.data)
             })
