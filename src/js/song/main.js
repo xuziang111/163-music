@@ -95,7 +95,10 @@
         get(id){
             var query = new AV.Query('Songs');
             return query.get(id).then((song) => {
-                Object.assign(this.data.song,{id:id,...song.attributes})
+                this.data.song = song.attributes
+                this.data.song.id = id
+                console.log(this.data.song)
+                //Object.assign(this.data.song,{id:id,...song.attributes})
                 return song 
             }, function (error) {
               alert('获取失败')

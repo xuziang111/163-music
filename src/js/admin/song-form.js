@@ -67,9 +67,11 @@
 			}
 		},
 		renderImage(data){
-			let html = this.templateImage
-			html = html.replace('__cover__',data.cover || '')
-			$(`${this.el}>.cover`).html(html)
+			//let html = this.templateImage
+			$(`${this.el}>div>.cover`).find('input').attr('value',data.cover || '')
+			console.log($(`${this.el}>div>.cover`))
+			console.log($(`${this.el}>div>.cover`).find('input'))
+			//html = html.replace('__cover__',data.cover || '').replace
 		},
     }
     let model = {
@@ -94,8 +96,7 @@
             .then((newSongs)=>{
 				console.log('xxxx')
 				  let {id,attributes} = newSongs
-				  Object.assign(this.data,{id,...attributes})
-				  console.log(this.data)
+				  this.data = console.log(Object.assign({id:id},attributes))
 	        })
 		},
 		update(data){
@@ -127,8 +128,10 @@
 				this.model.data={name:'',singer:'',url:'',id:'',cover:'',lrc:'',}	
 				this.reset(data)
 			})
-			window.eventHub.on('uploadImage',(data)=>{ //订阅upload事件
+			window.eventHub.on('uploadImage',(data)=>{ //订阅uploadImage事件
+				console.log(data)
 				Object.assign(this.model.data,data)
+				console.log(this.model.data)
 				this.view.renderImage(this.model.data)
 			})
 			window.eventHub.on('selectSong',(data)=>{//被点击的songData传入
