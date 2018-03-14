@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>云音乐</title>
-    <script>
-        let pageWidth = window.innerWidth
-        document.write(`<style>html{font-size:${pageWidth}px}</style>`)
-    </script>
     <link rel="stylesheet" href="./css/index/main.css">
     <link rel="stylesheet" href="./css/index/page1-2.css">
     <link rel="stylesheet" href="./css/index/page2.css">
+    <link rel="stylesheet" href="./css/index/page3.css">
 </head>
 <body>
     <header>
@@ -50,12 +47,22 @@
             </div>
         </section>
         <section id="page-3" class="page-3">
-333
+            <form>
+                <div class="search">
+                    <i class="search-svg"></i>
+                    <input name="song" type="text" value="">
+                    <label>搜索歌曲、歌手、专辑</label>
+                </div>
+            </form>
         </section>
         </main>
 
 
 <!--    <script src="../node_modules/qiniu-js/dist/qiniu.min.js"></script> -->
+    <script>
+        let pageWidth = window.innerWidth
+        document.write(`<style>html{font-size:${pageWidth}px}</style>`)
+    </script>
 	<script src="./js/init/jquery.min.js"></script>
     <script src="./js/init/av-min.js"></script>
     <script src="./js/init/event-hub.js"></script>

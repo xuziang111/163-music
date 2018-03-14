@@ -14,6 +14,20 @@
             this.view = view;
             this.model = model;
             this.bindEventHub()
+            this.bindEvents()
+            console.log($(this.view.el).find('input'))
+        },
+        bindEvents(){
+            $(this.view.el).find('input').on('keyup',()=>{
+                console.log($(this.view.el).find('input'))
+                console.log($(this.view.el).find('label'))
+                console.log($(this.view.el).find('input').val())
+                if($(this.view.el).find('input').val()){
+                    $(this.view.el).find('label').hide()
+                }else{
+                    $(this.view.el).find('label').show()
+                }
+            })
         },
         bindEventHub(){
             window.eventHub.on('selectTab',(tabName)=>{
