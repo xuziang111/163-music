@@ -19,7 +19,7 @@
 .list>div>a>div>.image{
     height:0.33rem;
     width:0.33rem;
-    background:url(http://p1.music.126.net/1ywRSZwxWashOZD-P7dswQ==/109951163187445525.webp?imageView&thumbnail=369x0&quality=75&tostatic=0&type=webp);
+    background:url("../../img/playlist-1.webp");
     background-size:cover;
     position: relative;
 }

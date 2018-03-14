@@ -1,0 +1,144 @@
+*{margin:0;padding:0;box-sizing: border-box;list-style: none;}
+        h1,h2,h3,h4,h5,h6{
+            font-weight:inherit;
+        }
+        *{
+        -webkit-tap-highlight-color: transparent;
+        -webkit-appearance:none;
+        }
+        body{
+            font-size:15px;
+            font-family: Helvetica, sans-serif;
+            color:#333;
+        }
+        a{
+            text-decoration: none;
+            color:inherit
+        }
+        header{
+            position:fixed;
+            z-index:10;
+            top:0;
+        }
+        .topBar{
+            background:#d33a31;
+            width:1rem;
+            height:64px;
+            padding:0 10px;
+        }
+        .clearfix::after{
+            content:'';
+            clear:both;
+            display:block;
+        }
+        .topBar>.logo{
+            float:left;
+            width:100px;
+            display:flex;
+            align-items: center;
+            transform:translateY(3px)
+        }
+        .topBar>.logo>h1{
+            line-height:64px;
+        }
+        .topsvg{
+            height:25px;
+            
+        }
+
+        .topBar>.topBar-right{
+            float:right;
+            color:white;
+            font-size:15px;
+            line-height:64px;
+        }
+        .topBar>.topBar-right>a{
+            font-size:15px;
+            padding:6px 10px;
+            border:1px solid rgba(255,255,255,0.7);
+            border-radius: 37.5%/100%;
+        }
+        header>nav{
+            width:1rem;
+            border-bottom:1px solid rgba(0,0,0,.1);
+            height:40px;
+            line-height:40px;
+            background-color:#fff;
+            display:flex;
+        }
+        header>nav>li{
+            width:33%;
+            text-align: center;
+        }
+        header>nav>li>div{
+            display:inline-block;
+            text-align:center;
+            height:40px;
+            line-height:40px;
+            padding:0 5px;
+        }
+        header>nav>li.active>div{
+            color:#d33a31;
+            border-bottom: 2px solid #d33a31;
+        }
+        main{
+            margin-top:105px;
+            background:#FCFCFC
+        }
+        .page-1,.page-2,.page-3{
+            display: none;
+        }
+        .page-1.active,.page-2.active,.page-3.active{
+            display:block;
+        }
+
+        .newSongList{
+            text-align:left;
+        }
+        .newSongList > li{
+            padding:10px;
+        }
+        .page-1{
+            padding-top:20px; 
+        }
+        .page-1>.playlist>h2,.page-1>.newsong>h2{
+            font-size:17px;
+            line-height:20px;
+            padding-left:9px;
+            border-left:2px solid #d33a31;
+            margin-bottom:14px;
+        }
+        .page-1>.newsong>ul{
+            cursor: pointer;
+        }
+        .page-1>.newsong>ul>li{
+            border-bottom:1px solid rgba(0,0,0,.1);
+            display:flex;
+            height:55px;
+            position: relative;
+        }
+        .page-1>.newsong>ul>li>a>.newSongList-left{
+            flex-grow: 1;
+        }
+        .page-1>.newsong>ul>li>a>.newSongList-left>h3{
+            font-size: 17px;
+        }
+        .page-1>.newsong>ul>li>a>.newSongList-left>p{
+            font-size:12px;
+            color:#888;
+            overflow: hidden;
+            white-space: nowrap;
+            word-break: normal;
+        }
+        .page-1>.newsong>ul>li>a>.newSongList-right{
+            position:absolute;
+            right:10px;
+            top:16px;
+        }
+        .page-1>.newsong>ul>li>a>.newSongList-right>span{
+            background:url('../../img/index/playbutton.png') no-repeat;
+            background-size: 22px 22px;
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+        }

@@ -22,6 +22,7 @@
                     .replace('{{song.singer}}',song.singer)
                     .replace('{{song.id}}',song.id)
                 )
+                console.log($li)
                 $(this.el).find('ul').append($li)
             })
         }
