@@ -128,24 +128,27 @@
             border-bottom:1px solid rgba(0,0,0,.1);
             display:flex;
             height:55px;
+            position: relative;
         }
-        .page-1>.newsong>ul>li>.newSongList-left{
+        .page-1>.newsong>ul>li>a>.newSongList-left{
             flex-grow: 1;
         }
-        .page-1>.newsong>ul>li>.newSongList-left>h3{
+        .page-1>.newsong>ul>li>a>.newSongList-left>h3{
             font-size: 17px;
         }
-        .page-1>.newsong>ul>li>.newSongList-left>p{
+        .page-1>.newsong>ul>li>a>.newSongList-left>p{
             font-size:12px;
             color:#888;
             overflow: hidden;
             white-space: nowrap;
             word-break: normal;
         }
-        .page-1>.newsong>ul>li>.newSongList-right{
-            line-height:48px;
+        .page-1>.newsong>ul>li>a>.newSongList-right{
+            position:absolute;
+            right:10px;
+            top:16px;
         }
-        .page-1>.newsong>ul>li>.newSongList-right>span{
+        .page-1>.newsong>ul>li>a>.newSongList-right>span{
             background:url('./img/index/playbutton.png') no-repeat;
             background-size: 22px 22px;
             display: inline-block;

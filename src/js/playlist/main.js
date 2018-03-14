@@ -1,9 +1,10 @@
 {
     let view = {
-        el:'section>.newsong',
+        el:'.play_list',
         template:`
         <li>
             <a href="./song.html?id={{song.id}}">
+            <div class="list-number">{{index}}</div>
                 <div class="newSongList-left">
                     <h3>{{song.name}}</h3>
                     <p>{{song.singer}}</p>
@@ -16,12 +17,16 @@
         `,
         render(data={}){ //根据data描绘左侧列表
             let {songs} = data
+            let index = 1;
             songs.map((song)=>{
                 let $li = $(this.template
                     .replace('{{song.name}}',song.name)
                     .replace('{{song.singer}}',song.singer)
                     .replace('{{song.id}}',song.id)
+                    .replace('{{index}}',index)
                 )
+                index++
+                console.log($li)
                 $(this.el).find('ul').append($li)
             })
         }
