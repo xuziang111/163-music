@@ -33,7 +33,7 @@
             let array = lrc.split('\n').map((string)=>{
                 let p = document.createElement('P')
                 let matches = string.match(regex)
-                p.textContent = matches[2]
+                    p.textContent = matches[2]
                 if(matches){
                     let time = matches[1]
                     let parts = time.split(':')
@@ -98,7 +98,6 @@
                 this.data.song = song.attributes
                 this.data.song.id = id
                 console.log(this.data.song)
-                //Object.assign(this.data.song,{id:id,...song.attributes})
                 return song 
             }, function (error) {
               alert('获取失败')

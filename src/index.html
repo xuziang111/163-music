@@ -9,6 +9,7 @@
         let pageWidth = window.innerWidth
         document.write(`<style>html{font-size:${pageWidth}px}</style>`)
     </script>
+    <link rel="stylesheet" href="./css/index/page1-2.css">
     <style>
         *{margin:0;padding:0;box-sizing: border-box;list-style: none;}
         h1,h2,h3,h4,h5,h6{
@@ -29,6 +30,7 @@
         }
         header{
             position:fixed;
+            z-index:10;
             top:0;
         }
         .topBar{
@@ -110,7 +112,7 @@
             padding:10px;
         }
         .page-1{
-            padding-top:20px;           
+            padding-top:20px; 
         }
         .page-1>.playlist>h2,.page-1>.newsong>h2{
             font-size:17px;

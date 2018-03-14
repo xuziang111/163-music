@@ -10,7 +10,7 @@
     }
     requirePage("./js/index/page-1-1.js")
     requirePage("./js/index/page-1-2.js")
-    
+    //引入模块结束
     let view = {
         el:'#page-1',
         show(){
