@@ -3,7 +3,6 @@
         el:"#site-loading",
         show(){
             $(this.el).addClass('active')
-            console.log($(this.el))
         },
         hidden(){
             $(this.el).removeClass('active')

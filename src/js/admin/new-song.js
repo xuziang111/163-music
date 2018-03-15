@@ -19,11 +19,9 @@
                 window.eventHub.emit('clickNewSong',data)
             })
             window.eventHub.on('selectSong',(data)=>{
-                console.log(data.id)
                 this.deactive()
             })
             $(this.view.el).on('click',(e)=>{
-                console.log('我被点了')
                 this.active()
                 window.eventHub.emit('clickNewSong')
             })
