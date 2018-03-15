@@ -22,14 +22,13 @@
             }
             $(this.el).find('h1').text(data.song.name)
             this.renderStyle(data)
+            let {lrc} = song
+            let regex = /\[([\d:.]+)\](.+)/
             if(status === 'playing'){
                 $(this.el).find('.cd-light').addClass('playing')
             }else{
                 $(this.el).find('.cd-light').removeClass('playing')
             }
-            let {lrc} = song
-            let regex = /\[([\d:.]+)\](.+)/
-
             let array = lrc.split('\n').map((string)=>{
                 let p = document.createElement('P')
                 let matches = string.match(regex)
@@ -122,11 +121,12 @@
                 if(this.model.data.status==='paused'){
                     this.view.play()
                     this.model.data.status = 'playing'
+                    $(this.view.el).find('.cd-light').addClass('playing')
                 }else{
                     this.view.pause()
                     this.model.data.status = 'paused'
+                    $(this.view.el).find('.cd-light').removeClass('playing')
                 }
-                this.view.render(this.model.data)
             })
             window.eventHub.on('songEnd',()=>{
                 this.model.data.status = 'paused'
