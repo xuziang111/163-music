@@ -97,7 +97,7 @@ body::after{
     100%{transform: rotate(360deg);}
 }
 .cd-light{
-    animation: circle 10s linear infinite;
+    animation: circle 20s linear infinite;
     animation-play-state: paused;
 }
 .cd-light.playing{
