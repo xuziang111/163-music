@@ -46,6 +46,7 @@
                 }
                 $(this.el).find('.lrc>.lines').append(p)
             })
+            
         },
         renderStyle(data){
             let style = this.template2.replace('{{cover}}',data.song.cover)
@@ -108,13 +109,21 @@
             this.view = view;
             this.model = model;
             let id = this.getSongId()
+            if(device === "apple"){
+                audio.pause()
+                this.model.data.status = 'paused'
+                $(this.el).find(".play-button").addClass('active')
+            }
             this.model.get(id).then((song)=>{
                 this.view.render(this.model.data)
                 setTimeout(() => {
+                if(device !== "apple"){
                     this.view.play()
-                }, 0);
+                    }
+                }, 500);
             })
             this.bindEvents()
+            
         },
         bindEvents(){
             $(this.view.el).on('click',()=>{
