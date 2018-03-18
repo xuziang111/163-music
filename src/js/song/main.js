@@ -130,6 +130,7 @@
             })
             window.eventHub.on('songEnd',()=>{
                 this.model.data.status = 'paused'
+                this.view.pause()
                 this.view.render(this.model.data)
             })
         },
