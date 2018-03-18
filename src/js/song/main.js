@@ -110,7 +110,7 @@
             this.model = model;
             let id = this.getSongId()
             if(device === "apple"){
-                audio.pause()
+                this.view.pause()
                 this.model.data.status = 'paused'
                 $(this.el).find(".play-button").addClass('active')
             }
