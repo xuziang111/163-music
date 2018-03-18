@@ -46,6 +46,7 @@
     </footer>
 
     <script>
+        if(navigator.userAgent){
             var u = navigator.userAgent;
             var device =""; //当前设备信息
             if (u.toLowerCase().indexOf('iphone') > -1 || u.toLowerCase().indexOf('mac')>-1) {//苹果手机
@@ -53,6 +54,7 @@
             }
             console.log(u)
             console.log(device)
+        }
     </script>
 	<script src="./js/init/jquery.min.js"></script>
 	<script src="./js/init/av-min.js"></script>
