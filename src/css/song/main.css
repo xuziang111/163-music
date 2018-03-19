@@ -93,12 +93,20 @@ body::after{
     text-overflow: ellipsis;
 }
 @-webkit-keyframes circle {
+    0%{
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+    }
     100% {
       -webkit-transform: rotate(1turn);
               transform: rotate(1turn);
     }
   }
   @keyframes circle {
+    0%{
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+    }
     100% {
       -webkit-transform: rotate(1turn);
               transform: rotate(1turn);
