@@ -92,16 +92,27 @@ body::after{
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-@keyframes circle {
-    0%{transform: rotate(0deg);}
-    100%{transform: rotate(360deg);}
-}
+@-webkit-keyframes circle {
+    100% {
+      -webkit-transform: rotate(1turn);
+              transform: rotate(1turn);
+    }
+  }
+  @keyframes circle {
+    100% {
+      -webkit-transform: rotate(1turn);
+              transform: rotate(1turn);
+    }
+  }
 .cd-light{
-    animation: circle 20s linear infinite;
-    animation-play-state: paused;
+    -webkit-animation: circle 20s linear infinite;
+            animation: circle 20s linear infinite;
+    -webkit-animation-play-state: paused;
+            animation-play-state: paused;
 }
 .cd-light.playing{
-    animation-play-state:running;
+    -webkit-animation-play-state:running;
+            animation-play-state:running;
 }
 .lrc{
     color: hsla(0,0%,100%,.6);
