@@ -11,7 +11,7 @@ header{
     overflow: hidden;
 }   
 .header-background{
-    background:url("../../img/playlist-1.webp");
+    background:url(http://p5gyxlxbh.bkt.clouddn.com/playlist-1.jpg);
     position: absolute;
     left: 0;
     top: 0;
@@ -34,7 +34,7 @@ header{
 .header-message>.header-message-cover{
     width: 126px;
     height: 126px;
-    background:url("../../img/playlist-1.webp");
+    background:url(http://p5gyxlxbh.bkt.clouddn.com/playlist-1.jpg);
     background-size:cover;
     position: relative;
 }

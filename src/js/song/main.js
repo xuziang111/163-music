@@ -128,13 +128,13 @@
         bindEvents(){
             $(this.view.el).on('click',()=>{
                 if(this.model.data.status==='paused'){
-                    this.view.play()
                     this.model.data.status = 'playing'
                     $(this.view.el).find('.cd-light').addClass('playing')
+                    this.view.play()
                 }else{
-                    this.view.pause()
                     this.model.data.status = 'paused'
                     $(this.view.el).find('.cd-light').removeClass('playing')
+                    this.view.pause()
                 }
             })
             window.eventHub.on('songEnd',()=>{

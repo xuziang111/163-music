@@ -38,18 +38,18 @@ body::after{
     position:absolute;
     left:45vw;
     top:0;
-    background:url("../../img/index/point.png") center center no-repeat;
+    background:url(http://p5gyxlxbh.bkt.clouddn.com/point.png) center center no-repeat;
     background-size:cover
 }
 .cd-border{
-    background:url("../../img/index/cd-border.png") center center no-repeat;
+    background:url(http://p5gyxlxbh.bkt.clouddn.com/cd-border.png) center center no-repeat;
     background-size: cover;
     display:flex;
     justify-content: center;
     align-items: center;
 }
 .cd-light{
-    background:url("../../img/index/cd-light.png") center center no-repeat;
+    background:url(http://p5gyxlxbh.bkt.clouddn.com/cd-light.png) center center no-repeat;
     background-size: cover;
 }
 .cd-cover{
