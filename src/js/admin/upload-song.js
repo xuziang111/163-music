@@ -16,7 +16,7 @@
         var uploader = Qiniu.uploader({
         runtimes: 'html5',      // 上传模式,依次退化
         browse_button: this.view.find('#uploadButton'),         // 上传选择的点选按钮，**必需**
-            uptoken_url:'http://localhost:8888/uptoken',
+            uptoken_url:'https://122.189.41.171:89/uptoken',
             get_new_uptoken: false,             // 设置上传文件的时候是否每次都重新获取新的 uptoken
         // downtoken_url: '/downtoken',
         // Ajax请求downToken的Url，私有空间时使用,JS-SDK 将向该地址POST文件的key和domain,服务端返回的JSON必须包含`url`字段，`url`值为该文件的下载地址
